@@ -9,7 +9,4 @@ const sql = neon(process.env.DATABASE_URL!);
 
 export const db = drizzle(sql, { schema });
 
-// Helper for backwards compatibility
-export const getDb = () => db;
-
 export type Database = typeof db;

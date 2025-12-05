@@ -1,7 +1,7 @@
 {
 	"servers": {
 		"Bun": {
-			"url": "https://bun.sh/docs/mcp",
+			"url": "https://bun.com/docs/mcp",
 			"type": "http"
 		}
 	},

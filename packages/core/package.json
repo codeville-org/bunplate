@@ -3,7 +3,22 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "exports": {
+    "./auth/config": {
+      "import": "./dist/auth/config.js",
+      "types": "./src/auth/config.ts"
+    },
+    "./database": {
+      "import": "./dist/database/index.js",
+      "types": "./src/database/index.ts"
+    },
+    "./database/schema": {
+      "import": "./dist/database/schema/index.js",
+      "types": "./src/database/schema/index.ts"
+    }
+  },
   "scripts": {
+    "build": "bun run build.ts",
     "db:generate": "bunx drizzle-kit generate",
     "db:push": "bunx drizzle-kit push",
     "db:migrate": "bun src/database/migrate.ts",
