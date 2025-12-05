@@ -2,10 +2,15 @@
   "name": "bunplate",
   "type": "module",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ],
+    "catalog": {
+      "better-auth": "^1.4.5"
+    }
+  },
   "scripts": {
     "db:generate": "bun run --filter core db:generate",
     "db:push": "bun run --filter core db:push",

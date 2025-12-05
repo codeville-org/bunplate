@@ -7,7 +7,8 @@
     "db:generate": "bunx drizzle-kit generate",
     "db:push": "bunx drizzle-kit push",
     "db:migrate": "bun src/database/migrate.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "auth:generate": "bunx @better-auth/cli@latest generate --config ./src/auth/config.ts --output ./src/database/schema/auth.schema.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -18,6 +19,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
-    "drizzle-orm": "^0.45.0"
+    "drizzle-orm": "^0.45.0",
+    "better-auth": "catalog:"
   }
 }
