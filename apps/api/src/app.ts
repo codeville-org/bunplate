@@ -26,6 +26,7 @@ try {
     secret: process.env.BETTER_AUTH_SECRET!
   });
 
+  const testApp = registerRoutes(setupAPI());
   // app = registerRoutes(setupAPI());
 
   // configureOpenAPI(app);
