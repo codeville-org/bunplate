@@ -6,9 +6,9 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
-    "noEmit": true,
+    "noEmit": false,
+    "outDir": "./dist",
 
     "strict": true,
     "jsx": "react-jsx",
