@@ -6,6 +6,7 @@ const app = new Hono();
 // Import at module-level for faster cold starts
 import { initDatabase } from "core/database";
 import type { Database } from "core/database";
+import { getAuth, setupAuth } from "core/auth/setup";
 
 // Module-level initialization - runs during cold start
 let db: Database;
@@ -15,13 +16,10 @@ try {
   db = initDatabase(process.env.DATABASE_URL!);
 
   // Initialize authentication at module load
-  // setAuth({
-  //   adapter: {
-  //     drizzleDb: db,
-  //     provider: "pg" // PostgreSQL for Vercel/Neon
-  //   },
-  //   secret: process.env.BETTER_AUTH_SECRET!
-  // });
+  setupAuth({
+    database: db,
+    secret: process.env.BETTER_AUTH_SECRET!
+  });
 } catch (error) {
   console.error("Failed to initialize database/auth:", error);
   throw error;
@@ -29,6 +27,11 @@ try {
 
 // Middleware
 app.use("*", logger());
+
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+  const auth = getAuth();
+  return auth.handler(c.req.raw);
+});
 
 app.get("/", async (c) => {
   const result = await db.execute(`select 'hello world' as text`);

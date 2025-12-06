@@ -8,6 +8,10 @@
       "import": "./dist/auth/config.js",
       "types": "./src/auth/config.ts"
     },
+    "./auth/setup": {
+      "import": "./dist/auth/setup.js",
+      "types": "./src/auth/setup.ts"
+    },
     "./database": {
       "import": "./dist/database/index.js",
       "types": "./src/database/index.ts"
@@ -27,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/ws": "^8.18.1",
     "drizzle-kit": "^0.31.8"
   },
   "peerDependencies": {
@@ -34,7 +39,8 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
+    "better-auth": "catalog:",
     "drizzle-orm": "^0.45.0",
-    "better-auth": "catalog:"
+    "ws": "^8.18.3"
   }
 }

@@ -1,6 +1,7 @@
 // Build script for core package
 const entrypoints = [
   "./src/auth/config.ts",
+  "./src/auth/setup.ts",
   "./src/database/index.ts",
   "./src/database/schema/index.ts"
 ];

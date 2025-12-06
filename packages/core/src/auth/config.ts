@@ -1,24 +1,32 @@
-import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { betterAuth } from "better-auth";
 
-import { getDatabase } from "../database";
-import * as schema from "../database/schema";
+import { type Database } from "../database";
+import * as authSchema from "../database/schema/auth.schema";
 import { admin, openAPI } from "better-auth/plugins";
 
-export const auth = betterAuth({
-  trustedOrigins: [process.env.CLIENT_URL!],
-  baseURL: process.env.BETTER_AUTH_URL!,
+export interface AuthConfigurations {
+  database: Database;
+  secret?: string;
+  plugins?: Parameters<typeof betterAuth>[0]["plugins"];
+}
 
-  database: drizzleAdapter(getDatabase(), {
-    provider: "pg",
-    usePlural: true,
-    schema
-  }),
-  emailAndPassword: {
-    enabled: true
-  },
+export function configAuth(config: AuthConfigurations) {
+  const baseAuthInstance = betterAuth({
+    database: drizzleAdapter(config.database, {
+      provider: "pg",
+      schema: authSchema,
+      usePlural: true
+    }),
+    secret: config.secret,
+    plugins: [admin(), openAPI(), ...(config.plugins || [])],
 
-  plugins: [admin(), openAPI()]
-});
+    emailAndPassword: {
+      enabled: true
+    }
+  });
 
-export type Auth = typeof auth;
+  return baseAuthInstance;
+}
+
+export type AuthInstance = ReturnType<typeof configAuth>;
