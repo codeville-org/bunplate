@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "buildCommand": "bun run build:vercel",
+  "outputDirectory": "dist",
+  "installCommand": "bun install && bun run --filter core build",
+  "bunVersion": "1.x",
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/dist/index.js"
+    }
+  ]
+}
