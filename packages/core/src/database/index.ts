@@ -21,12 +21,7 @@ export function initDatabase(databaseUrl: string) {
   }
 
   // If no db instance, prepare and return
-  const sql = neon(databaseUrl, {
-    fetchOptions: {
-      cache: "no-store"
-    },
-    fullResults: false
-  });
+  const sql = neon(databaseUrl);
   db = drizzle(sql, { schema });
 
   return db;
