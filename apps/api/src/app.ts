@@ -1,4 +1,4 @@
-let app: OpenAPIHono<APIBindings>;
+// let app: OpenAPIHono<APIBindings>;
 
 // Import at module-level for faster cold starts
 import { OpenAPIHono } from "@hono/zod-openapi";
@@ -26,23 +26,20 @@ try {
     secret: process.env.BETTER_AUTH_SECRET!
   });
 
-  app = registerRoutes(setupAPI());
+  // app = registerRoutes(setupAPI());
 
-  configureOpenAPI(app);
+  // configureOpenAPI(app);
 } catch (error) {
   console.error("Failed to initialize database/auth:", error);
 
-  // Fallback app that returns 500 for all requests
-  const fallback = new Hono<APIBindings>();
-
-  fallback.all("*", (c) => {
-    return c.json(
-      { error: "Internal Server Error: Initialization Failed" },
-      500
-    );
-  });
-
   throw error;
 }
+
+// app that returns 500 for all requests
+const app = new Hono<APIBindings>();
+
+app.get("/", (c) => {
+  return c.json({ message: "Test vercel" }, 200);
+});
 
 export default app;
