@@ -4,7 +4,8 @@ const entrypoints = [
   "./src/auth/setup.ts",
   "./src/database/index.ts",
   "./src/database/schema/index.ts",
-  "./src/rpc/index.ts"
+  "./src/rpc/index.ts",
+  "./src/env/index.ts"
 ];
 
 const result = await Bun.build({

@@ -7,6 +7,7 @@ import { Hono } from "hono";
 import { initDatabase } from "core/database";
 import type { Database } from "core/database";
 import { setupAuth } from "core/auth/setup";
+import { env } from "core/env";
 
 import { APIBindings } from "./types";
 import { setupAPI } from "./lib/setup-api";
@@ -17,13 +18,15 @@ import configureOpenAPI from "./lib/open-api-config";
 let db: Database;
 
 try {
+  console.log(env);
+
   // Initialize database connection at module load
-  db = initDatabase(process.env.DATABASE_URL!);
+  db = initDatabase(env.DATABASE_URL);
 
   // Initialize authentication at module load
   setupAuth({
     database: db,
-    secret: process.env.BETTER_AUTH_SECRET!
+    secret: env.BETTER_AUTH_SECRET
   });
 
   app = registerRoutes(setupAPI());

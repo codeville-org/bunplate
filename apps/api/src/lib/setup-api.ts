@@ -4,6 +4,7 @@ import { defaultHook } from "stoker/openapi";
 import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
 
 import { getAuth } from "core/auth/setup";
+import { env } from "core/env";
 
 import { APIBindings, OpenAPI } from "@/types";
 import { BASE_PATH } from "./constants";
@@ -29,7 +30,7 @@ export function setupAPI(): OpenAPIHono<APIBindings> {
   api.use(
     "*",
     cors({
-      origin: [process.env.CLIENT_APP_URL!],
+      origin: [env.CLIENT_URL!],
       allowHeaders: ["Content-Type", "Authorization"],
       allowMethods: ["POST", "GET", "PUT", "DELETE", "PATCH", "OPTIONS"],
       exposeHeaders: ["Content-Length"],

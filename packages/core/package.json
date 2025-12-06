@@ -23,6 +23,10 @@
     "./rpc": {
       "import": "./dist/rpc/index.js",
       "types": "./src/rpc/index.ts"
+    },
+    "./env": {
+      "import": "./dist/env/index.js",
+      "types": "./src/env/index.ts"
     }
   },
   "scripts": {
@@ -45,8 +49,9 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "better-auth": "catalog:",
-    "hono": "catalog:",
     "drizzle-orm": "^0.45.0",
-    "ws": "^8.18.3"
+    "hono": "catalog:",
+    "ws": "^8.18.3",
+    "zod": "^4.1.13"
   }
 }
