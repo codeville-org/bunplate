@@ -53338,15 +53338,22 @@ var package_default = {
   name: "api",
   type: "module",
   version: "0.0.1",
+  exports: {
+    "./types": {
+      import: "./dist/types/index.js",
+      types: "./src/registry/index.ts"
+    }
+  },
   scripts: {
     dev: "bun run --hot src/app.ts",
-    "build:vercel": "bun run build.ts"
+    "build:types": "bun run builders/build-types.ts",
+    "build:vercel": "bun run builders/build-vercel.ts && bun run build:types"
   },
   dependencies: {
     "@hono/zod-openapi": "^1.1.5",
     "@scalar/hono-api-reference": "^0.9.26",
     core: "workspace:*",
-    hono: "^4.10.7",
+    hono: "catalog:",
     stoker: "^2.0.1"
   },
   devDependencies: {
@@ -53398,4 +53405,4 @@ export {
   api_default as default
 };
 
-//# debugId=30A52129254A5B0E64756E2164756E21
+//# debugId=17910C6B7DE1A19F64756E2164756E21

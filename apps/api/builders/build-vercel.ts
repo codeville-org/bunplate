@@ -2,9 +2,10 @@
 import { $ } from "bun";
 import { resolve } from "path";
 
-const ROOT = import.meta.dir;
-const DIST = resolve(ROOT, "dist");
-const API_DIR = resolve(ROOT, "");
+// Establish directory structure
+const BUILDERS_DIR = import.meta.dir;
+const API_ROOT = resolve(BUILDERS_DIR, "..");
+const DIST = resolve(API_ROOT, "dist");
 
 async function build() {
   console.log("🔨 Building for Vercel deployment...\n");
@@ -19,7 +20,7 @@ async function build() {
     console.log("📦 Bundling API application...");
 
     const result = await Bun.build({
-      entrypoints: [resolve(API_DIR, "index.ts")],
+      entrypoints: [resolve(API_ROOT, "index.ts")],
       outdir: DIST,
       target: "node",
       format: "esm",
@@ -27,13 +28,11 @@ async function build() {
       minify: false,
       sourcemap: "external",
       external: [
-        // Keep Hono as external so Vercel can detect it
         "hono",
         "hono/*",
         "@hono/zod-openapi",
         "@scalar/hono-api-reference",
         "stoker",
-        // Runtime dependencies
         "@neondatabase/serverless",
         "ws"
       ],
