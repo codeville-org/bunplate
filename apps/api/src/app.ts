@@ -1,12 +1,16 @@
-import { Hono } from "hono";
-import { logger } from "hono/logger";
-
-const app = new Hono();
+let app: OpenAPIHono<APIBindings>;
 
 // Import at module-level for faster cold starts
+import { OpenAPIHono } from "@hono/zod-openapi";
+
 import { initDatabase } from "core/database";
 import type { Database } from "core/database";
-import { getAuth, setupAuth } from "core/auth/setup";
+import { setupAuth } from "core/auth/setup";
+
+import { APIBindings } from "./types";
+import { setupAPI } from "./lib/setup-api";
+import { registerRoutes } from "./registry";
+import configureOpenAPI from "./lib/open-api-config";
 
 // Module-level initialization - runs during cold start
 let db: Database;
@@ -20,26 +24,13 @@ try {
     database: db,
     secret: process.env.BETTER_AUTH_SECRET!
   });
+
+  app = registerRoutes(setupAPI());
+
+  configureOpenAPI(app);
 } catch (error) {
   console.error("Failed to initialize database/auth:", error);
   throw error;
 }
-
-// Middleware
-app.use("*", logger());
-
-app.on(["POST", "GET"], "/api/auth/*", (c) => {
-  const auth = getAuth();
-  return auth.handler(c.req.raw);
-});
-
-app.get("/", async (c) => {
-  const result = await db.execute(`select 'hello world' as text`);
-
-  return c.json({
-    message: "Hello from Bunplate API!",
-    dbResult: result.rows[0]
-  });
-});
 
 export default app;
