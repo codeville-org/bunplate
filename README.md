@@ -18,3 +18,4 @@ This project was created using `bun init` in bun v1.2.18. [Bun](https://bun.sh) 
 
 Developer Notes:
 [x] Initialized Bun Project
+[x] Initialized Dev Branch
