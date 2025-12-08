@@ -7,16 +7,16 @@ import { BASE_PATH } from "./constants";
 import { OpenAPIHono } from "@hono/zod-openapi";
 
 export default function configureOpenAPI(app: OpenAPIHono<APIBindings>): void {
-  app.doc31("/api/doc", {
-    openapi: "3.1.0",
+  app.doc("/doc", {
+    openapi: "3.0.0",
     info: {
-      version: packageJson.version,
+      version: "1.0.0",
       title: "Bunplate (by CodeVille)"
     }
   });
 
   app.get(
-    "/api/reference",
+    "/reference",
     Scalar(() => ({
       url: `${BASE_PATH}/doc`,
       theme: "default"
