@@ -41,3 +41,5 @@ apps/api/src/generated-openapi-spec.ts
 .vercel
 
 **/dist
+
+.next
