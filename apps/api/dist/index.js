@@ -53264,6 +53264,54 @@ var notFoundSchema = createMessageObjectSchema(HttpStatusPhrases.NOT_FOUND);
 
 // src/lib/setup-api.ts
 import { logger as logger2 } from "hono/logger";
+
+// src/lib/open-api-config.ts
+import { Scalar } from "@scalar/hono-api-reference";
+// package.json
+var package_default = {
+  name: "api",
+  type: "module",
+  version: "0.0.1",
+  exports: {
+    "./types": {
+      import: "./dist/types/index.js",
+      types: "./src/registry/index.ts"
+    }
+  },
+  scripts: {
+    dev: "bun run --hot src/app.ts",
+    "build:types": "bun run builders/build-types.ts",
+    "build:vercel": "bun run builders/build-vercel.ts && bun run build:types"
+  },
+  dependencies: {
+    "@hono/zod-openapi": "^1.1.5",
+    "@scalar/hono-api-reference": "^0.9.26",
+    core: "workspace:*",
+    hono: "catalog:",
+    stoker: "^2.0.1"
+  },
+  devDependencies: {
+    "@types/bun": "latest"
+  }
+};
+
+// src/lib/open-api-config.ts
+function configureOpenAPI(app) {
+  app.doc("/doc", {
+    openapi: "3.0.0",
+    info: {
+      version: package_default.version,
+      title: "Bunplate (by CodeVille)"
+    }
+  });
+  app.get("/reference", Scalar(() => ({
+    url: `${BASE_PATH}/doc`,
+    theme: "default"
+  })));
+  return app;
+}
+
+// src/lib/setup-api.ts
 function createAPIRouter() {
   return new OpenAPIHono({
     strict: false,
@@ -53291,6 +53339,7 @@ function setupAPI() {
     const auth = getAuth();
     return auth.handler(c.req.raw);
   });
+  configureOpenAPI(api2);
   api2.onError(onError);
   api2.notFound(notFound);
   return api2;
@@ -53779,56 +53828,10 @@ var tasks_registry_default = router3;
 
 // src/registry/index.ts
 function registerRoutes(app) {
-  return app.route("/", index_route_default).route("/tasks", tasks_registry_default);
+  const registeredApp = app.route("/", index_route_default).route("/tasks", tasks_registry_default);
+  return registeredApp;
 }
 var router4 = registerRoutes(createAPIRouter().basePath(BASE_PATH));
-
-// src/lib/open-api-config.ts
-import { Scalar } from "@scalar/hono-api-reference";
-// package.json
-var package_default = {
-  name: "api",
-  type: "module",
-  version: "0.0.1",
-  exports: {
-    "./types": {
-      import: "./dist/types/index.js",
-      types: "./src/registry/index.ts"
-    }
-  },
-  scripts: {
-    dev: "bun run --hot src/app.ts",
-    "build:types": "bun run builders/build-types.ts",
-    "build:vercel": "bun run builders/build-vercel.ts && bun run build:types"
-  },
-  dependencies: {
-    "@hono/zod-openapi": "^1.1.5",
-    "@scalar/hono-api-reference": "^0.9.26",
-    core: "workspace:*",
-    hono: "catalog:",
-    stoker: "^2.0.1"
-  },
-  devDependencies: {
-    "@types/bun": "latest"
-  }
-};
-
-// src/lib/open-api-config.ts
-function configureOpenAPI(app) {
-  app.doc("/doc", {
-    openapi: "3.0.0",
-    info: {
-      version: package_default.version,
-      title: "Bunplate (by CodeVille)"
-    }
-  });
-  app.get("/reference", Scalar(() => {
-    return {
-      url: `${BASE_PATH}/doc`,
-      theme: "default"
-    };
-  }));
-}
 
 // src/app.ts
 var app;
@@ -53840,7 +53843,6 @@ try {
     secret: env3.BETTER_AUTH_SECRET
   });
   app = registerRoutes(setupAPI());
-  configureOpenAPI(app);
 } catch (error48) {
   console.error("Failed to initialize database/auth:", error48);
   const fallback = new Hono;
@@ -53857,4 +53859,4 @@ export {
   api_default as default
 };
 
-//# debugId=EDAC028E2C2C82C964756E2164756E21
+//# debugId=E6315788C234DCD864756E2164756E21

@@ -2,6 +2,9 @@
 import { $ } from "bun";
 import { resolve } from "path";
 
+import packageJson from "../package.json";
+import { router } from "../src/registry";
+
 // Establish directory structure
 const BUILDERS_DIR = import.meta.dir;
 const API_ROOT = resolve(BUILDERS_DIR, "..");
@@ -73,6 +76,25 @@ async function build() {
     );
 
     console.log("✓ package.json created\n");
+
+    // Generate open api documentation
+    console.log("📄 Generating OpenAPI documentation...");
+
+    const specs = router.getOpenAPIDocument({
+      openapi: "3.0.0",
+      info: {
+        version: packageJson.version,
+        title: packageJson.name
+      }
+    });
+
+    await Bun.write(
+      resolve(DIST, "public", "openapi.json"),
+      JSON.stringify(specs, null, 2)
+    );
+
+    console.log("✅ OpenAPI spec generated at public/openapi.json");
+
     console.log("🎉 Build completed successfully!");
   } catch (error) {
     console.error("❌ Build failed:", error);
