@@ -3,7 +3,11 @@ const entrypoints = [
   "./src/auth/config.ts",
   "./src/auth/setup.ts",
   "./src/database/index.ts",
-  "./src/database/schema/index.ts"
+  "./src/database/schema/index.ts",
+  "./src/database/queries/index.ts",
+  "./src/rpc/index.ts",
+  "./src/env/index.ts",
+  "./src/zod/index.ts"
 ];
 
 const result = await Bun.build({
@@ -22,7 +26,10 @@ const result = await Bun.build({
     "better-auth/plugins",
     "drizzle-orm",
     "drizzle-orm/neon-http",
-    "@neondatabase/serverless"
+    "@neondatabase/serverless",
+    "hono/client",
+    "api/types",
+    "zod"
   ]
 });
 
