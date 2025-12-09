@@ -1,22 +1,38 @@
 import { Scalar } from "@scalar/hono-api-reference";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
 import { APIBindings } from "@/types";
 
 import packageJson from "../../package.json";
-import { BASE_PATH } from "./constants";
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { BASE_PATH, IS_PRODUCTION } from "./constants";
 
 export default function configureOpenAPI(
   app: OpenAPIHono<APIBindings>
 ): OpenAPIHono<APIBindings> {
-  app.doc("/doc", {
-    openapi: "3.0.0",
-    info: {
-      version: packageJson.version,
-      title: "Bunplate (by CodeVille)"
-    }
-  });
+  if (IS_PRODUCTION) {
+    // In production, serve the pre-built openapi.json as static file
+    app.get("/doc", async (c) => {
+      try {
+        const file = Bun.file("./public/openapi.json");
+        const json = await file.json();
+        return c.json(json);
+      } catch (error) {
+        console.error("Failed to load openapi.json:", error);
+        return c.json({ error: "OpenAPI spec not found" }, 500);
+      }
+    });
+  } else {
+    // In development, generate OpenAPI spec dynamically
+    app.doc("/doc", {
+      openapi: "3.0.0",
+      info: {
+        version: packageJson.version,
+        title: "Bunplate (by CodeVille)"
+      }
+    });
+  }
 
+  // Scalar API Reference UI
   app.get(
     "/reference",
     Scalar(() => ({

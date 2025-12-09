@@ -3,6 +3,8 @@ import { cors } from "hono/cors";
 import { defaultHook } from "stoker/openapi";
 import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
 
+import { serveStatic } from "hono/bun";
+
 import { getAuth } from "core/auth/setup";
 import { env } from "core/env";
 

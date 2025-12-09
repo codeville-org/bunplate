@@ -3,6 +3,9 @@ import { createMessageObjectSchema } from "stoker/openapi/schemas";
 
 export const BASE_PATH = "/api" as const;
 
+// Check if running in Vercel production
+export const IS_PRODUCTION = process.env.VERCEL_ENV === "production";
+
 export const ZOD_ERROR_MESSAGES = {
   REQUIRED: "Required",
   EXPECTED_NUMBER: "Expected number, received nan",
