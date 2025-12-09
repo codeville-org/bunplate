@@ -1,5 +1,6 @@
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { join } from "path";
 
 import { APIBindings } from "@/types";
 
@@ -13,11 +14,18 @@ export default function configureOpenAPI(
     // In production, serve the pre-built openapi.json as static file
     app.get("/doc", async (c) => {
       try {
-        const file = Bun.file("./public/openapi.json");
+        // Use absolute path relative to the dist directory
+        const filePath = join(process.cwd(), "public", "openapi.json");
+        const file = Bun.file(filePath);
         const json = await file.json();
         return c.json(json);
       } catch (error) {
         console.error("Failed to load openapi.json:", error);
+        console.error("Current working directory:", process.cwd());
+        console.error(
+          "Attempted path:",
+          join(process.cwd(), "public", "openapi.json")
+        );
         return c.json({ error: "OpenAPI spec not found" }, 500);
       }
     });
