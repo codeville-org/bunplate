@@ -35831,6 +35831,680 @@ var init_kysely_adapter = __esm(() => {
   init_esm();
 });
 
+// src/generated-openapi-spec.ts
+var exports_generated_openapi_spec = {};
+__export(exports_generated_openapi_spec, {
+  openAPISpec: () => openAPISpec
+});
+var openAPISpec;
+var init_generated_openapi_spec = __esm(() => {
+  openAPISpec = {
+    openapi: "3.0.0",
+    info: {
+      version: "0.0.1",
+      title: "api"
+    },
+    components: {
+      schemas: {},
+      parameters: {}
+    },
+    paths: {
+      "/api": {
+        get: {
+          tags: [
+            "Index"
+          ],
+          responses: {
+            "200": {
+              description: "Hono API - Index Endpoint",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      },
+                      auth: {
+                        type: "object",
+                        properties: {
+                          user: {
+                            nullable: true
+                          },
+                          session: {
+                            nullable: true
+                          }
+                        }
+                      }
+                    },
+                    required: [
+                      "message",
+                      "auth"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/tasks": {
+        get: {
+          tags: [
+            "Tasks"
+          ],
+          summary: "List all tasks",
+          parameters: [
+            {
+              schema: {
+                type: "string"
+              },
+              required: false,
+              name: "page",
+              in: "query"
+            },
+            {
+              schema: {
+                type: "string"
+              },
+              required: false,
+              name: "limit",
+              in: "query"
+            },
+            {
+              schema: {
+                type: "string",
+                enum: [
+                  "asc",
+                  "desc"
+                ],
+                default: "desc"
+              },
+              required: false,
+              name: "sort",
+              in: "query"
+            },
+            {
+              schema: {
+                type: "string"
+              },
+              required: false,
+              name: "search",
+              in: "query"
+            }
+          ],
+          responses: {
+            "200": {
+              description: "The list of tasks",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      data: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          properties: {
+                            id: {
+                              type: "number"
+                            },
+                            name: {
+                              type: "string"
+                            },
+                            done: {
+                              type: "boolean"
+                            },
+                            createdAt: {
+                              type: "string",
+                              format: "date"
+                            },
+                            updatedAt: {
+                              type: "string",
+                              nullable: true,
+                              format: "date"
+                            }
+                          },
+                          required: [
+                            "id",
+                            "name",
+                            "done",
+                            "createdAt",
+                            "updatedAt"
+                          ]
+                        }
+                      },
+                      meta: {
+                        type: "object",
+                        properties: {
+                          currentPage: {
+                            type: "number"
+                          },
+                          limit: {
+                            type: "number"
+                          },
+                          totalCount: {
+                            type: "number"
+                          },
+                          totalPages: {
+                            type: "number"
+                          }
+                        },
+                        required: [
+                          "currentPage",
+                          "limit",
+                          "totalCount",
+                          "totalPages"
+                        ]
+                      }
+                    },
+                    required: [
+                      "data",
+                      "meta"
+                    ]
+                  }
+                }
+              }
+            },
+            "500": {
+              description: "Internal server error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        post: {
+          tags: [
+            "Tasks"
+          ],
+          summary: "Create a new task",
+          requestBody: {
+            description: "The task to create",
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      minLength: 1,
+                      maxLength: 255
+                    },
+                    done: {
+                      type: "boolean",
+                      default: false
+                    }
+                  },
+                  required: [
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          responses: {
+            "201": {
+              description: "The created task",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "number"
+                      },
+                      name: {
+                        type: "string"
+                      },
+                      done: {
+                        type: "boolean"
+                      },
+                      createdAt: {
+                        type: "string",
+                        format: "date"
+                      },
+                      updatedAt: {
+                        type: "string",
+                        nullable: true,
+                        format: "date"
+                      }
+                    },
+                    required: [
+                      "id",
+                      "name",
+                      "done",
+                      "createdAt",
+                      "updatedAt"
+                    ]
+                  }
+                }
+              }
+            },
+            "401": {
+              description: "Unauthroized request",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "422": {
+              description: "The validation error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "500": {
+              description: "Internal server error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/tasks/{id}": {
+        get: {
+          tags: [
+            "Tasks"
+          ],
+          summary: "Get a single task",
+          parameters: [
+            {
+              schema: {
+                type: "string"
+              },
+              required: true,
+              name: "id",
+              in: "path"
+            }
+          ],
+          responses: {
+            "200": {
+              description: "Requested task",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "number"
+                      },
+                      name: {
+                        type: "string"
+                      },
+                      done: {
+                        type: "boolean"
+                      },
+                      createdAt: {
+                        type: "string",
+                        format: "date"
+                      },
+                      updatedAt: {
+                        type: "string",
+                        nullable: true,
+                        format: "date"
+                      }
+                    },
+                    required: [
+                      "id",
+                      "name",
+                      "done",
+                      "createdAt",
+                      "updatedAt"
+                    ]
+                  }
+                }
+              }
+            },
+            "404": {
+              description: "Task not found",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "422": {
+              description: "Invalid ID format",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "500": {
+              description: "Internal server error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        patch: {
+          tags: [
+            "Tasks"
+          ],
+          summary: "Update a task",
+          parameters: [
+            {
+              schema: {
+                type: "string"
+              },
+              required: true,
+              name: "id",
+              in: "path"
+            }
+          ],
+          requestBody: {
+            description: "The task updates",
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string"
+                    },
+                    done: {
+                      type: "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          responses: {
+            "200": {
+              description: "The updated task",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "number"
+                      },
+                      name: {
+                        type: "string"
+                      },
+                      done: {
+                        type: "boolean"
+                      },
+                      createdAt: {
+                        type: "string",
+                        format: "date"
+                      },
+                      updatedAt: {
+                        type: "string",
+                        nullable: true,
+                        format: "date"
+                      }
+                    },
+                    required: [
+                      "id",
+                      "name",
+                      "done",
+                      "createdAt",
+                      "updatedAt"
+                    ]
+                  }
+                }
+              }
+            },
+            "401": {
+              description: "Unauthroized request",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "404": {
+              description: "Task not found",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "422": {
+              description: "The validation error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "500": {
+              description: "Internal server error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        delete: {
+          tags: [
+            "Tasks"
+          ],
+          summary: "Remove a task",
+          parameters: [
+            {
+              schema: {
+                type: "string"
+              },
+              required: true,
+              name: "id",
+              in: "path"
+            }
+          ],
+          responses: {
+            "204": {
+              description: "Task deleted"
+            },
+            "401": {
+              description: "Unauthroized request",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "404": {
+              description: "Task not found",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "422": {
+              description: "Invalid ID format",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            },
+            "500": {
+              description: "Internal server error(s)",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string"
+                      }
+                    },
+                    required: [
+                      "message"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+});
+
 // src/app.ts
 import { Hono } from "hono";
 
@@ -53301,8 +53975,8 @@ var package_default = {
 var cachedOpenAPISpec = null;
 if (IS_PRODUCTION) {
   try {
-    const { openAPISpec } = await import("../generated-openapi-spec");
-    cachedOpenAPISpec = openAPISpec;
+    const { openAPISpec: openAPISpec2 } = await Promise.resolve().then(() => (init_generated_openapi_spec(), exports_generated_openapi_spec));
+    cachedOpenAPISpec = openAPISpec2;
     console.log("✓ OpenAPI spec loaded from generated module");
   } catch (error48) {
     console.error("⚠️ Failed to load generated OpenAPI spec:", error48);
@@ -53880,4 +54554,4 @@ export {
   api_default as default
 };
 
-//# debugId=BE1DCBD48327283564756E2164756E21
+//# debugId=C56ED0AE990EDCD064756E2164756E21
