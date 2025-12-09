@@ -9,6 +9,7 @@ import { router } from "../src/registry";
 const BUILDERS_DIR = import.meta.dir;
 const API_ROOT = resolve(BUILDERS_DIR, "..");
 const DIST = resolve(API_ROOT, "dist");
+const PUBLIC = resolve(API_ROOT, "public");
 
 async function build() {
   console.log("🔨 Building for Vercel deployment...\n");
@@ -89,7 +90,7 @@ async function build() {
     });
 
     await Bun.write(
-      resolve(DIST, "public", "openapi.json"),
+      resolve(PUBLIC, "openapi.json"),
       JSON.stringify(specs, null, 2)
     );
 
