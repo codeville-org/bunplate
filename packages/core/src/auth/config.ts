@@ -38,6 +38,15 @@ export function configAuth(config: AuthConfigurations) {
     },
 
     advanced: {
+      cookies: {
+        session_token: {
+          attributes: {
+            sameSite: "none",
+            secure: true,
+            httpOnly: true
+          }
+        }
+      },
       // Enable cross-subdomain cookies for Vercel deployment
       crossSubDomainCookies: isProduction
         ? {
@@ -46,8 +55,9 @@ export function configAuth(config: AuthConfigurations) {
           }
         : undefined,
       defaultCookieAttributes: {
-        sameSite: isProduction ? "lax" : "none", // Use lax for cross-subdomain, none for local dev
+        sameSite: "none", // Use lax for cross-subdomain, none for local dev
         secure: true,
+        httpOnly: true,
         partitioned: true // New browser standards will mandate this for foreign cookies
       }
     }
