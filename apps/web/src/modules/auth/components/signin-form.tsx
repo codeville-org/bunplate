@@ -65,7 +65,7 @@ export function SigninForm({
       }
 
       toast.success("User signed in successfully!", { id: toastId });
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
       const error = err as Error;
       toast.error(`Failed: ${error.message}`, { id: toastId });
