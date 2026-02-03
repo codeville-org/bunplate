@@ -6,7 +6,6 @@ const entrypoints = [
   "./src/database/schema/index.ts",
   "./src/database/queries/index.ts",
   "./src/rpc/index.ts",
-  "./src/env/index.ts",
   "./src/zod/index.ts"
 ];
 

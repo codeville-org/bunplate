@@ -94,8 +94,15 @@ var accountRelations = relations(accounts, ({ one }) => ({
 // src/auth/config.ts
 import { admin, openAPI } from "better-auth/plugins";
 function configAuth(config) {
+  const isProduction = process.env.VERCEL_ENV === "production" || false;
   const baseAuthInstance = betterAuth({
-    trustedOrigins: ["http://localhost:3000"],
+    baseURL: process.env.BETTER_AUTH_URL,
+    trustedOrigins: [
+      "http://localhost:3000",
+      "http://localhost:4000",
+      "https://bunplate-web.vercel.app",
+      "https://bunplate-api.vercel.app"
+    ],
     database: drizzleAdapter(config.database, {
       provider: "pg",
       schema: exports_auth_schema,
@@ -105,6 +112,27 @@ function configAuth(config) {
     plugins: [admin(), openAPI(), ...config.plugins || []],
     emailAndPassword: {
       enabled: true
+    },
+    advanced: {
+      cookies: {
+        session_token: {
+          attributes: {
+            sameSite: "none",
+            secure: true,
+            httpOnly: true
+          }
+        }
+      },
+      crossSubDomainCookies: isProduction ? {
+        enabled: true,
+        domain: ".vercel.app"
+      } : undefined,
+      defaultCookieAttributes: {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+        partitioned: true
+      }
     }
   });
   return baseAuthInstance;
@@ -130,4 +158,4 @@ export {
   getAuth
 };
 
-//# debugId=0C9D6CDD745800B764756E2164756E21
+//# debugId=829CFA5395E8070064756E2164756E21

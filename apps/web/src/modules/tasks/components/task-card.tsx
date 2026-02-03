@@ -18,8 +18,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 
-import { deleteTask } from "../_actions/delete-task.action";
-import { markAsCompleted } from "../_actions/mark-as-completed.action";
+import { deleteTask } from "../actions/delete-task.action";
+import { markAsCompleted } from "../actions/mark-as-completed.action";
 
 type Props = {
   task: any;

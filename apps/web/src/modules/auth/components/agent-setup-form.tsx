@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useId, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
+import { toKebabCase } from "core/zod";
 
 import {
   Form,
@@ -27,7 +28,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 import { authClient } from "@/lib/auth-client";
-import { toKebabCase } from "@/lib/helpers";
 import { setupOrgSchema, type SetupOrgSchemaT } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 

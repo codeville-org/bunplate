@@ -4,6 +4,8 @@ import {
   type AuthInstance
 } from "./config";
 
+export type { AuthInstance };
+
 let authInstance: AuthInstance;
 
 /**

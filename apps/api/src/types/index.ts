@@ -1,11 +1,11 @@
 import { BASE_PATH } from "@/lib/constants";
 import { OpenAPIHono, RouteConfig, RouteHandler } from "@hono/zod-openapi";
 
-import { getAuth } from "core/auth/setup";
+import { getAuth, type AuthInstance } from "core/auth/setup";
 import { Database } from "core/database";
 import { Context } from "hono";
 
-const auth = getAuth();
+const auth: AuthInstance = getAuth();
 
 export interface APIBindings {
   Variables: {

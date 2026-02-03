@@ -28,13 +28,12 @@
       "import": "./dist/rpc/index.js",
       "types": "./src/rpc/index.ts"
     },
-    "./env": {
-      "import": "./dist/env/index.js",
-      "types": "./src/env/index.ts"
-    },
     "./zod": {
       "import": "./dist/zod/index.js",
       "types": "./src/zod/index.ts"
+    },
+    "./types": {
+      "types": "./types/index.d.ts"
     }
   },
   "scripts": {
